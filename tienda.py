@@ -177,3 +177,37 @@ class ResultsFrame(tk.Frame):
         self.lbl_descuento.config(text=f"Descuento: S/. {importe_descuento:.2f}")
         self.lbl_total.config(text=f"Total a pagar: S/. {total:.2f}")
         self.lbl_obsequio.config(text=f"Obsequio: {obsequio}")
+
+    # Frame de créditos
+class CreditsFrame(tk.Frame):
+    def __init__(self, parent, controller):
+        super().__init__(parent)
+        self.controller = controller
+        
+        lbl_titulo = tk.Label(self, text="Créditos", font=('Arial', 14))
+        lbl_titulo.pack(pady=20)
+        
+        self.lbl_creditos = tk.Label(self, text="")
+        self.lbl_creditos.pack(pady=5)
+        
+        btn_frame = tk.Frame(self)
+        btn_frame.pack(pady=20)
+        
+        btn_reiniciar = ttk.Button(btn_frame, text="Nueva compra", command=self.reiniciar)
+        btn_reiniciar.pack(side=tk.LEFT, padx=10)
+        
+        btn_salir = ttk.Button(btn_frame, text="Salir", command=self.controller.destroy)
+        btn_salir.pack(side=tk.RIGHT, padx=10)
+
+    def actualizar_creditos(self):
+        texto = f"Programa creado por:\nEstudiante Paul Guerra\nContacto: 1364628@senati.pe / 927 361 945"
+        self.lbl_creditos.config(text=texto)
+
+    def reiniciar(self):
+        self.controller.datos_compra = {}
+        self.controller.show_frame(WelcomeFrame)
+
+# Iniciar la aplicación
+if __name__ == "__main__":
+    app = MusicStoreApp()
+    app.mainloop()
