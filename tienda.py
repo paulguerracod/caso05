@@ -34,6 +34,32 @@ class MusicStoreApp(tk.Tk):
             frame.actualizar_resultados()
         elif cont == CreditsFrame:
             frame.actualizar_creditos()
+
+        # Frame de bienvenida
+        class WelcomeFrame(tk.Frame):
+            def __init__(self, parent, controller):
+                super().__init__(parent)
+        self.controller = controller
+        
+        lbl_titulo = tk.Label(self, text="¡Bienvenido a la Tienda de la Música!", font=('Arial', 14))
+        lbl_titulo.pack(pady=20)
+        
+        lbl_nombre = tk.Label(self, text="¿Cuál es tu nombre?")
+        lbl_nombre.pack(pady=5)
+        
+        self.entry_nombre = tk.Entry(self, width=30)
+        self.entry_nombre.pack(pady=5)
+        
+        btn_continuar = ttk.Button(self, text="Continuar", command=self.continuar)
+        btn_continuar.pack(pady=10)
+
+    def continuar(self):
+        nombre = self.entry_nombre.get()
+        if nombre.strip():
+            self.controller.usuario = nombre
+            self.controller.show_frame(DataEntryFrame)
+        else:
+            messagebox.showwarning("Campo requerido", "Por favor ingresa tu nombre")
         
         # Frame de entrada de datos
         class DataEntryFrame(tk.Frame):
