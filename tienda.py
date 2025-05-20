@@ -1,4 +1,4 @@
-import tkinter as tk 
+import tkinter as tk
 from tkinter import ttk, messagebox
 
 # Clase principal de la aplicación
@@ -35,10 +35,10 @@ class MusicStoreApp(tk.Tk):
         elif cont == CreditsFrame:
             frame.actualizar_creditos()
 
-        # Frame de bienvenida
-        class WelcomeFrame(tk.Frame):
-            def __init__(self, parent, controller):
-                super().__init__(parent)
+# Frame de bienvenida
+class WelcomeFrame(tk.Frame):
+    def __init__(self, parent, controller):
+        super().__init__(parent)
         self.controller = controller
         
         lbl_titulo = tk.Label(self, text="¡Bienvenido a la Tienda de la Música!", font=('Arial', 14))
@@ -60,11 +60,11 @@ class MusicStoreApp(tk.Tk):
             self.controller.show_frame(DataEntryFrame)
         else:
             messagebox.showwarning("Campo requerido", "Por favor ingresa tu nombre")
-        
-        # Frame de entrada de datos
-        class DataEntryFrame(tk.Frame):
-            def __init__(self, parent, controller):
-                super().__init__(parent)
+
+# Frame de entrada de datos
+class DataEntryFrame(tk.Frame):
+    def __init__(self, parent, controller):
+        super().__init__(parent)
         self.controller = controller
         
         lbl_titulo = tk.Label(self, text="Datos de la compra", font=('Arial', 12))
@@ -76,8 +76,8 @@ class MusicStoreApp(tk.Tk):
         
         self.entry_cantidad = ttk.Entry(self)
         self.entry_cantidad.pack(pady=5)
-
-                # Género
+        
+        # Género
         lbl_genero = tk.Label(self, text="Género musical:")
         lbl_genero.pack(pady=5)
         
@@ -89,7 +89,7 @@ class MusicStoreApp(tk.Tk):
         btn_calcular = ttk.Button(self, text="Calcular", command=self.calcular)
         btn_calcular.pack(pady=20)
 
-        def calcular(self):
+    def calcular(self):
         try:
             cantidad = int(self.entry_cantidad.get())
             genero = self.genero_var.get().lower()
@@ -120,7 +120,7 @@ class MusicStoreApp(tk.Tk):
         except ValueError:
             messagebox.showerror("Error", "Ingresa una cantidad válida")
 
-        # Frame de resultados
+# Frame de resultados
 class ResultsFrame(tk.Frame):
     def __init__(self, parent, controller):
         super().__init__(parent)
@@ -178,7 +178,7 @@ class ResultsFrame(tk.Frame):
         self.lbl_total.config(text=f"Total a pagar: S/. {total:.2f}")
         self.lbl_obsequio.config(text=f"Obsequio: {obsequio}")
 
-    # Frame de créditos
+# Frame de créditos
 class CreditsFrame(tk.Frame):
     def __init__(self, parent, controller):
         super().__init__(parent)
