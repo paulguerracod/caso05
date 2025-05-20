@@ -119,3 +119,61 @@ class MusicStoreApp(tk.Tk):
             
         except ValueError:
             messagebox.showerror("Error", "Ingresa una cantidad válida")
+
+        # Frame de resultados
+class ResultsFrame(tk.Frame):
+    def __init__(self, parent, controller):
+        super().__init__(parent)
+        self.controller = controller
+        
+        self.lbl_genero = tk.Label(self, text="")
+        self.lbl_genero.pack(pady=5)
+        
+        self.lbl_importe = tk.Label(self, text="")
+        self.lbl_importe.pack(pady=5)
+        
+        self.lbl_descuento = tk.Label(self, text="")
+        self.lbl_descuento.pack(pady=5)
+        
+        self.lbl_total = tk.Label(self, text="")
+        self.lbl_total.pack(pady=5)
+        
+        self.lbl_obsequio = tk.Label(self, text="")
+        self.lbl_obsequio.pack(pady=5)
+        
+        btn_continuar = ttk.Button(self, text="Ver créditos", command=lambda: controller.show_frame(CreditsFrame))
+        btn_continuar.pack(pady=20)
+
+    def actualizar_resultados(self):
+        datos = self.controller.datos_compra
+        cantidad = datos["cantidad"]
+        genero = datos["genero"]
+        precio = datos["precio_unitario"]
+        
+        def calcular_descuento(cant):
+            if cant == 1:
+                return 0
+            elif cant == 4:
+                return 0.06
+            elif 5 <= cant <= 10:
+                return 0.08
+            elif cant > 10:
+                return 0.102
+            return 0
+        
+        def determinar_obsequio(gen, cant):
+            if (gen == "pop" or gen == "rock") and cant > 6:
+                return "Poster"
+            return "Ninguno"
+        
+        importe_compra = cantidad * precio
+        descuento = calcular_descuento(cantidad)
+        importe_descuento = importe_compra * descuento
+        total = importe_compra - importe_descuento
+        obsequio = determinar_obsequio(genero, cantidad)
+        
+        self.lbl_genero.config(text=f"Género: {genero.capitalize()}")
+        self.lbl_importe.config(text=f"Importe compra: S/. {importe_compra:.2f}")
+        self.lbl_descuento.config(text=f"Descuento: S/. {importe_descuento:.2f}")
+        self.lbl_total.config(text=f"Total a pagar: S/. {total:.2f}")
+        self.lbl_obsequio.config(text=f"Obsequio: {obsequio}")
