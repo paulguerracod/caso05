@@ -34,3 +34,62 @@ class MusicStoreApp(tk.Tk):
             frame.actualizar_resultados()
         elif cont == CreditsFrame:
             frame.actualizar_creditos()
+        
+        # Frame de entrada de datos
+        class DataEntryFrame(tk.Frame):
+            def __init__(self, parent, controller):
+                super().__init__(parent)
+        self.controller = controller
+        
+        lbl_titulo = tk.Label(self, text="Datos de la compra", font=('Arial', 12))
+        lbl_titulo.pack(pady=10)
+        
+        # Cantidad
+        lbl_cantidad = tk.Label(self, text="Cantidad de discos:")
+        lbl_cantidad.pack(pady=5)
+        
+        self.entry_cantidad = ttk.Entry(self)
+        self.entry_cantidad.pack(pady=5)
+
+                # Género
+        lbl_genero = tk.Label(self, text="Género musical:")
+        lbl_genero.pack(pady=5)
+        
+        self.genero_var = tk.StringVar()
+        cbx_genero = ttk.Combobox(self, textvariable=self.genero_var, 
+                                 values=["Salsa", "Rock", "Pop", "Folclore"])
+        cbx_genero.pack(pady=5)
+        
+        btn_calcular = ttk.Button(self, text="Calcular", command=self.calcular)
+        btn_calcular.pack(pady=20)
+
+        def calcular(self):
+        try:
+            cantidad = int(self.entry_cantidad.get())
+            genero = self.genero_var.get().lower()
+            
+            if cantidad <= 0:
+                messagebox.showerror("Error", "La cantidad debe ser mayor a 0")
+                return
+                
+            if not genero:
+                messagebox.showerror("Error", "Selecciona un género musical")
+                return
+                
+            precios = {
+                "salsa": 56.00,
+                "rock": 63.00,
+                "pop": 87.00,
+                "folclore": 120.50
+            }
+            
+            self.controller.datos_compra = {
+                "cantidad": cantidad,
+                "genero": genero,
+                "precio_unitario": precios[genero]
+            }
+            
+            self.controller.show_frame(ResultsFrame)
+            
+        except ValueError:
+            messagebox.showerror("Error", "Ingresa una cantidad válida")
